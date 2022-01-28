@@ -18,27 +18,7 @@
     >
       <b-card class="border-0" @click="toggleActions">
         <p class="card-text" v-if="isCreator">
-          <b-button
-            class="text-left w-100"
-            v-if="editingPost && isCreator"
-            block
-            v-b-modal="`modal-${elementId}`"
-            aria-label="Edit"
-          >
-            <b-icon icon="pencil" class="mr-2 mr-lg-3"></b-icon
-            ><span>{{ modifyText }}</span></b-button
-          >
-          <b-button
-            class="text-left w-100"
-            v-if="!editingPost && isCreator"
-            block
-            @click="clickedEditButton"
-            aria-label="Edit"
-          >
-            <b-icon icon="pencil" class="mr-2 mr-lg-3"></b-icon
-            ><span>{{ modifyText }}</span></b-button
-          >
-          <slot></slot>
+          
         </p>
         <p class="card-text">
           <b-button
@@ -68,7 +48,6 @@ export default {
     'isAdmin',
     'isCreator',
     'elementId',
-    'modifyText',
     'deleteText',
     'editingPost'
   ],

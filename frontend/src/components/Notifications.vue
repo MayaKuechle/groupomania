@@ -20,24 +20,13 @@
       "
     >
       <b-card class="border-0" @click="toggleActions">
-        <div v-for="notification in notificationsList" :key="notification.id"><!--<div v-for="notification in notificationsList">-->
-          <router-link
-            :to="{ name: 'OnePost', params: { postId: notification.postId } }"
-            @click.native="deleteNotification(notification)"
-          >
+        <div v-for="notification in notificationsList" :key="notification.id">
             <div class="d-flex align-items-center">
-             <!-- <div>
-                <ProfileImage
-                  :src="notification.Sender.imageUrl"
-                  customClass="like-profile-picture"
-                  divCustomClass="div-like-picture"
-                />
-              </div>-->
               <p
                 v-html="notification.content"
                 class="card-text text-left py-2 mb-3"
               ></p></div
-          ></router-link>
+          >
         </div>
       </b-card>
     </b-collapse>
@@ -62,13 +51,9 @@
 
 <script>
 import { apiClient } from '../services/ApiClient'
-import ProfileImage from './ProfileImage'
 
 export default {
   name: 'Notifications',
-  components: {
-    ProfileImage
-  },
   props: {},
   data () {
     return {
@@ -93,17 +78,7 @@ export default {
     },
     async getNotificationsOfOneUser () {
       const res = await apiClient.get(`api/notifications/${this.userData.userId}`)
-      //console.log(this.userData.userId);
       this.notificationsList = res.notification
-    },
-    async deleteNotification (notificationToDelete) {
-      console.log("delete notification?",res);
-      const res = await apiClient.delete(
-        `api/notifications/${notificationToDelete.id}`
-      )
-      this.notificationsList = this.notificationsList.filter(
-        notification => notification.id !== notificationToDelete.id
-      )
     }
   }
 }

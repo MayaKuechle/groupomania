@@ -39,7 +39,6 @@ exports.login = async (req, res, next) => {
 
 exports.editUser = (req, res, next) => {
 
-  console.log("backend wisdom", req.file);
   try {
     const userObject = req.file
       ? {
@@ -50,41 +49,11 @@ exports.editUser = (req, res, next) => {
         }
       : { ...req.body }
 
-    //console.log(userObject)
     req.user.update(userObject).then(user => res.status(200).json({ user }))
   } catch (error) {
     res.status(400).json({ error })
   }
 }
-
-  /*try {
-    const userObject = req.file
-      ? {
-          ...JSON.parse(req.body.user),
-          imageUrl: `${req.protocol}://${req.get('host')}/uploads/${
-            req.file.filename
-          }`
-        }
-      : { ...req.body }
-
-    req.user.update(userObject).then(user => res.status(200).json({ user }))
-  } catch (error) {
-    res.status(400).json({ error })
-  }
-
-  async modifyProfilePicture () {
-    const changeProfile = await apiClient.put(
-      `api/auth/edit${this.User.userId}${this.comment.id}`,
-      { imageUrl: `${req.protocol}://${req.get('host')}/uploads/${
-        req.file.filename
-      }` }
-    )
-
-    this.User.updatedAt = changeProfile.User.updatedAt
-    this.isEditing = false
-    this.displayNotification('User Profile updated!')
-  }
-}*/
 
 exports.getOneUser = (req, res, next) => {
   User.findOne({ where: { userId: req.params.userId } })

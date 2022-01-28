@@ -11,7 +11,6 @@
         </b-card>
       </b-col>
     </b-row>
-    <!--<PostsList :userId="userData.userId" />-->
     <PostsList />
   </div>
 </template>
@@ -32,7 +31,6 @@ export default {
     Menu
   },
   data () {
-    //console.log(localStorage.getItem('userData'));
     return {
       userData: JSON.parse(localStorage.getItem('userData'))
     }

@@ -36,7 +36,6 @@ exports.getOnePost = (req, res, next) => {
 }
 
 exports.getAllPosts = (req, res, next) => {
-  //console.log("\n\n\n\n\nbackend:", res, "\n\n\n\n\n");
   const limit = 4
   const page = parseInt(req.query.page) || 1
  
@@ -56,27 +55,6 @@ exports.getAllPosts = (req, res, next) => {
   Post.findAll(options)
     .then(posts => res.status(200).json({ posts }))
     .catch(error => res.status(400).json({error }))
-}
-
-exports.modifyPost = (req, res, next) => {
-  const postObject = req.file
-    ? {
-        ...JSON.parse(req.body.post),
-        imageUrl: `${req.protocol}://${req.get('host')}/public/${
-          req.file.filename
-        }`
-      }
-    : { ...req.body }
-
-  Post.findOne({
-    where: { id: req.params.id, userId: req.user.userId }
-  }).then(post => {
-    if (!post) {
-      res.status(400).json({ error: "You have no authorization!" })
-    } else {
-      post.update(postObject).then(post => res.status(200).json({ post }))
-    }
-  })
 }
 
 exports.deletePost = (req, res, next) => {

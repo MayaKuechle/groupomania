@@ -23,7 +23,6 @@ export default {
 
   async mounted () {
     await this.initializePostStore(this.queryParams)
-    //console.log("postsLitstsuserid", this.userId);
   },
 
   created () {
@@ -42,7 +41,6 @@ export default {
       const remainingOffset = totalHeight - scrollHeight
 
       if (remainingOffset < 300) {
-        //console.log(this.queryParams);
         this.loadMore(this.queryParams)
       }
     }
@@ -51,10 +49,8 @@ export default {
     ...mapState(['posts']),
     queryParams () {
       if (this.userId) {
-        //console.log("has userid", this.userId);
         return { userId: this.userId }
       } else {
-        //console.log("no userid");
         return {}
       }
     }

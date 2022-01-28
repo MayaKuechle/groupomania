@@ -8,11 +8,6 @@
       <span class="name-profile-btn d-none d-lg-block">{{
         userData.firstName
       }}</span>
-      <ProfileImage
-        :src="userData.imageUrl"
-        customClass="profile-btn__img"
-        divCustomClass="div-profile-btn-img"
-      />
     </button>
     <b-collapse
       id="profile-collapsed"
@@ -55,13 +50,9 @@
 </template>
 
 <script>
-import ProfileImage from './ProfileImage'
 
 export default {
   name: 'ProfileButton',
-  components: {
-    ProfileImage
-  },
   props: {},
   data () {
     return {

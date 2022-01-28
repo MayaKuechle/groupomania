@@ -6,7 +6,6 @@
       :isAdmin="userData.admin"
       @onDelete="onDelete"
       :elementId="post.id"
-      modifyText="Edit Post"
       deleteText="Delete Post"
     >
       <b-modal
@@ -47,39 +46,23 @@ export default {
       content: this.post.content,
       userData: JSON.parse(localStorage.getItem('userData')),
       selectedFile: null
-      //areActionsVisible: false
     }
   },
   methods: {
-    ...mapActions(['deletePost', 'modifyPost', 'displayNotification']),
+    ...mapActions(['deletePost', 'displayNotification']),
 
     toggleActions () {
       this.areActionsVisible = !this.areActionsVisible
     },
 
     async onDelete () {
-      //this.$emit('onDelete')
       await this.deletePost(this.post.id)
       this.displayNotification('Post deleted!')
     },
 
     onFileSelected (file) {
       this.selectedFile = file
-    },
-
-    async onUpload () {
-      if (!this.content.trim().length) return
-      await this.modifyPost({
-        postId: this.post.id,
-        selectedFile: this.selectedFile,
-        content: this.content
-      })
-      this.displayNotification('Post updated!')
     }
-
-    /*async clickedEditButton () {
-      this.$emit('clickedEditButton')
-    }*/
   }
 }
 </script>

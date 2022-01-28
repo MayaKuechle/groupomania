@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 var mysql = require ('mysql');
-//var sqlite3 = require ('sqlite3');
 var expressValidator = require ('express-validator');
 var expressSession = require ('express-session');
 const session = require('express-session');

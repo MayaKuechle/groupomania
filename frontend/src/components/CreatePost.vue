@@ -1,5 +1,5 @@
 <template>
-  <div> <!-- v-model updates automatically, so content gets uploaded automatically -->
+  <div>
     <b-form @submit="onSubmit">
       <PostForm
         @onFileSelected="onFileSelected" 
@@ -30,18 +30,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['createPost', 'displayNotification']), //...let's code result in having an array with duplicate elements
+    ...mapActions(['createPost', 'displayNotification']),
 
 
-    onFileSelected (file) { //define new method should have an argument called file
-      //console.log("Hello");
-      //console.log(file);
+    onFileSelected (file) {
       let body = this.input
       
-      //const isFormData = !!this.selectedFile
-      this.selectedFile = file //single equal assignment , == comparison 
+      const isFormData = !!this.selectedFile
+      this.selectedFile = file 
         
-        if (this.selectedFile) {
+        if (isFormData) {
           const formData = new FormData()
           formData.append('image', this.file)
           formData.append('user', JSON.stringify(body))

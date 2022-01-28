@@ -9,7 +9,7 @@
       <span v-if="count > 2">Show {{ count - 1 }} other comments</span>
       <span v-else>Show {{ count - 1 }} other comment</span>
     </button>
-    <div class="comment mb-2 text-left" v-for="comment in list" :key="comment.id"><!--<div class="comment mb-2 text-left" v-for="comment in list">-->
+    <div class="comment mb-2 text-left" v-for="comment in list" :key="comment.id">
       <Comment
         @commentDeleted="removeComment"
         :comment="comment"
@@ -32,7 +32,8 @@ export default {
   name: 'CommentsList',
   components: {
     CreateComment,
-    Comment
+    Comment,
+    PostsList
   },
   props: ['post'],
   data () {

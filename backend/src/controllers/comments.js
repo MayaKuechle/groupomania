@@ -5,7 +5,6 @@ const { Comments,User } = db.sequelize.models
 
 exports.createComment = async (req, res, next) => {
   try {
-    console.log(req.user);
     let comment = await Comments.create({
       ...req.body,
       postId: req.params.postId,
@@ -47,21 +46,6 @@ exports.getAllComments = (req, res, next) => {
       res.status(200).json({ comments })
     })
     .catch(error => res.status(400).json({ error }))
-}
-
-exports.modifyComment = (req, res, next) => {
-  Comments.findOne({
-    where: { id: req.params.id, userId: req.user.userId },
-    include: User
-  }).then(comment => {
-    if (!comment) {
-      res.status(400).json({ error: "You have no authorization!" })
-    } else {
-      comment
-        .update(req.body)
-        .then(comment => res.status(200).json({ comment }))
-    }
-  })
 }
 
 exports.deleteComment = async (req, res, next) => {

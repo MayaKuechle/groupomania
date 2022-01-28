@@ -5,13 +5,7 @@
             :to="{ name: 'UserProfile', params: { userId: this.post.userId } }"
           ></router-link>
     <b-row class="text-center justify-content-center">
-      <div class="d-flex align-items-center flex-column">
-        <ProfileImage
-          :src="post.User.imageUrl"
-          customClass="post-profile-picture"
-          divCustomClass="div-post-picture"
-        />
-          
+      <div class="d-flex align-items-center flex-column">  
         <p class="user-name">
           {{ this.post.firstName }} {{ this.post.lastName }}
         </p>
@@ -31,7 +25,6 @@
 
 <script>
 import { apiClient } from '../services/ApiClient'
-import ProfileImage from '../components/ProfileImage'
 import PostsList from '../components/PostsList'
 import Menu from '../components/Menu'
 import AdminDeleteAccount from '../components/AdminDeleteAccount'
@@ -40,7 +33,6 @@ export default {
   name: 'UserProfile',
   params: { userId: userProfile.userId },
   components: {
-    ProfileImage,
     PostsList,
     Menu,
     AdminDeleteAccount

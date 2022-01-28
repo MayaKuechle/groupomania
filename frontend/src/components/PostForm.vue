@@ -3,12 +3,7 @@
     <b-form-group>
       <div class="d-flex align-items-center">
         <div class="d-flex mr-2 mr-lg-3 mt-2">
-          <router-link :to="{ name: 'Profile' }">
-            <ProfileImage
-              :src="userData.imageUrl"
-              customClass="post-profile-picture"
-              divCustomClass="div-post-picture"
-          /></router-link>
+          
         </div>
         <b-form-textarea
           :value="value"
@@ -73,10 +68,7 @@
           class="d-none"
           type="file"
           @change="onFileSelected" 
-        /> <!-- type= file for visual 
-        @change for whenever the user adds a new file 
-        onFileSelected is a method typically used with @change
-        missing argument, or make it argumentless and fetch from function -->
+        />
       </div>
     </b-form-group>
   </div>
@@ -84,13 +76,9 @@
 
 <script>
 import { apiClient } from '../services/ApiClient'
-import ProfileImage from './ProfileImage'
 
 export default {
   name: 'PostForm',
-  components: {
-    ProfileImage
-  },
   props: ['value', 'imageUrl', 'onFormSubmit', 'isCreating'],
   data () {
     return {
@@ -110,7 +98,6 @@ export default {
   methods: {
     onFileSelected (event) {
       this.url = URL.createObjectURL(event.target.files[0])
-      console.log (event);
       this.$emit('onFileSelected', event.target.files[0])
     },
     updateValue (value) {
@@ -122,7 +109,8 @@ export default {
   },
   computed: {
     emptyField () {
-      return !this.value.trim().length && !this.url
+      return !this.value.trim().length && !this.url,
+      this.$forceUpdate();
     }
   }
 }

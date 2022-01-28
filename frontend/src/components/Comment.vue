@@ -3,12 +3,6 @@
     <div class="d-flex align-items-center position-relative">
       <router-link
         :to="{ name: 'UserProfile', params: { userId: this.comment.User.userId } }"
-        ><div class="d-flex text-center mr-2 mt-2">
-          <ProfileImage
-            :src="comment.UserImage"
-            customClass="comment-profile-picture"
-            divCustomClass="div-comment-picture"
-          /></div
       ></router-link>
       <div class="comment-box">
         <router-link
@@ -17,18 +11,7 @@
           {{comment.User.username}}
           </p></router-link
         >
-        <input
-          v-if="isEditing"
-          ref="inputContent"
-          v-model="comment.content"
-          @keydown.enter.exact.prevent
-          @keyup.enter.exact="modifyComment"
-          @keydown.enter.shift.exact="newline"
-          type="text"
-          class="input-content border-0 my-2"
-          aria-label="Edit comment"
-        />
-        <p v-else class="mb-0">{{ comment.content }}</p>
+        <p class="mb-0">{{ comment.content }}</p>
       </div>
       <div class="position-relative">
         <EditButton
@@ -36,9 +19,7 @@
           classCollapse="comment-btn-collapsed"
           :isCreator="comment.senderUserId == userData.id"
           :isAdmin="userData.admin"
-          @clickedEditButton="startEditing"
           @onDelete="onDelete"
-          modifyText="Edit"
           deleteText="Delete"
         />
       </div>
@@ -57,13 +38,11 @@
 import { mapActions } from 'vuex'
 import { apiClient } from '../services/ApiClient'
 import EditButton from './EditButton'
-import ProfileImage from './ProfileImage'
 
 export default {
   name: 'Comment',
   components: {
-    EditButton,
-    ProfileImage
+    EditButton
   },
   props: ['comment', 'post'],
   data () {
@@ -95,16 +74,6 @@ export default {
     },
     newline () {
       this.comment.content = `${this.comment.content}\n`
-    },
-
-    async modifyComment () {
-      const res = await apiClient.put(
-        `api/posts/${this.post.id}/comments/${this.comment.id}`,
-        { content: this.comment.content }
-      )
-      this.comment.updatedAt = res.comment.updatedAt
-      this.isEditing = false
-      this.displayNotification('Comment edited!')
     }
   }
 }

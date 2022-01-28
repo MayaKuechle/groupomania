@@ -2,12 +2,6 @@
   <div>
     <div class="d-flex align-items-center mt-3">
       <div class="d-flex mr-2 mb-2">
-        <router-link :to="{ name: 'Profile' }">
-          <ProfileImage
-            :src="userData.imageUrl"
-            customClass="comment-profile-picture"
-            divCustomClass="div-comment-picture"
-        /></router-link>
       </div>
       <b-form class="w-100" @submit="createComment">
         <b-form-group>
@@ -31,13 +25,9 @@
 <script>
 import { apiClient } from '../services/ApiClient'
 import router from '../router/index'
-import ProfileImage from './ProfileImage'
 
 export default {
   name: 'CreateComment',
-  components: {
-    ProfileImage
-  },
   props: ['post'],
   data () {
     return {

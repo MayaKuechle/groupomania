@@ -6,8 +6,6 @@ const {
   addAuthenticationOn
 } = require('../services/authentication')
 
-//const { deleteFile } = require('../services/file-removal')
-
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate (models) {
@@ -46,12 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isEmail: true/*,
-          //use a method to display a custom error message
-          async ensureEmailIsUnique (email) {
-            if (await User.findOne({ where: { email } }))
-              throw new Error('An account with this email already exists!')
-          } // add else*/
+          isEmail: true
         }
       },
       password: {

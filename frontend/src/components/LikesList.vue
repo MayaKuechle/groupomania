@@ -21,21 +21,7 @@
       <span class="likes-number ml-2">{{ likesCount }}</span>
     </button>
     <b-modal :id="`modal-likes-${post.id}`" :title="`${likesCount} Like`">
-      <div v-for="likes in likesList" :key="likes.id"><!--<div v-for="like in likesList">-->
-        <router-link
-          :to="{ name: 'UserProfile', params: { userId: this.likes.User.userId } }"
-          ><div class="d-flex align-items-center">
-            <div class="d-flex text-center">
-              <ProfileImage
-                :src="likes.User.imageUrl"
-                customClass="like-profile-picture"
-                divCustomClass="div-like-picture"
-              />
-            </div>
-            <p>{{ likes.User.firstName }} {{ likes.User.lastName }}</p>
-          </div></router-link
-        >
-      </div>
+    
       <div slot="modal-footer"></div>
     </b-modal>
   </div>
@@ -43,13 +29,9 @@
 
 <script>
 import { apiClient } from '../services/ApiClient'
-import ProfileImage from './ProfileImage'
 
 export default {
   name: 'LikesList',
-  components: {
-    ProfileImage
-  },
   props: ['post', 'likesCount'],
   data () {
     return {

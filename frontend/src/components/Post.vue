@@ -4,24 +4,11 @@
       class="mx-auto border-0 shadow p-0 p-lg-3 mb-2 mt-2 mb-lg-5 mt-lg-3 bg-white rounded"
     >
       <div class="d-flex align-items-center">
-        <div class="d-flex mr-3">
-          <router-link
-            :to="{ name: 'OtherProfile', params: { userId: this.post.userId } }"
-          >
-          <ProfileImage
-            :src="this.post.User.imageUrl"
-            customClass="post-profile-picture"
-            divCustomClass="div-post-picture"
-          /></router-link>
-        </div>
         <div class="text-left">
-          <router-link
-            :to="{ name: 'UserProfile', params: { userId: this.post.userId } }"
-            
-          ><p class="user-name font-weight-bold mb-0">
+         <p class="user-name font-weight-bold mb-0">
           {{ this.post.User.username }}
-        </p></router-link
-          >
+        </p>
+          
           <p class="text-secondary">
             {{
               moment(this.post.createdAt)
@@ -37,9 +24,7 @@
           classCollapse="post-btn-collapsed"
           :isCreator="this.post.userId == userData.userId"
           :isAdmin="userData.admin"
-          @clickedEditButton="startEditing"
           @onDelete="onDelete"
-          modifyText="Edit"
           deleteText="Delete"
         />
      
@@ -127,7 +112,6 @@ import { apiClient } from '../services/ApiClient'
 import router from '../router/index'
 import EditPost from '../components/EditPost'
 import EditButton from '../components/EditButton'
-import ProfileImage from './ProfileImage'
 import CommentsList from '../components/CommentsList'
 import LikesList from '../components/LikesList'
 
@@ -136,7 +120,6 @@ export default {
   components: {
     EditButton,
     EditPost,
-    ProfileImage,
     CommentsList,
     LikesList
   },
@@ -145,7 +128,6 @@ export default {
   ],
 
   data () {
-    //console.log("please work", this.post);
     return {
       userData: JSON.parse(localStorage.getItem('userData')),
       likesThisPost: false,
@@ -157,8 +139,6 @@ export default {
     async likeOrUnlikePost () {
       const res = await apiClient.post(`api/posts/${this.post.id}/likes`)
 
-      //console.log("What is the response?", res.like);
-
       if (res.like !== this.likesThisPost) {
 
         this.post.likesCount += res.like ? 1 : -1
@@ -166,7 +146,6 @@ export default {
       }
 
       this.likesThisPost = res.like
-      //window.location.reload()
     },
 
     ...mapActions(['displayNotification']),
@@ -174,7 +153,6 @@ export default {
     async mounted () { /*when the page loads*/
       const res = await apiClient.get(`api/posts/${this.post.id}/likes`)
       this.likesThisPost = res.like
-      //console.log(this.post);
     },
 
     focusInput () {
@@ -198,24 +176,12 @@ export default {
     startEditing () {
       this.isEditing = true
       setTimeout(() => {
-        //console.log(this.$refs);
         this.$refs.inputContent.focus()
       }, 30)
     },
     newline () {
       this.post.content = `${this.post.content}\n`
     },
-
-    async modifyPost () {
-      const res = await apiClient.put(
-        `api/posts/${this.post.id}`,
-        { content: this.post.content }
-      )
-      this.post.updatedAt = res.post.updatedAt
-      this.isEditing = false
-      this.displayNotification('Post edited!')
-    }
-
   }
 }
 </script>
@@ -256,6 +222,7 @@ export default {
 .blue {
   color: rgb(32, 120, 244);
 }
+
 .react-btn {
   background: white;
   border: none;
